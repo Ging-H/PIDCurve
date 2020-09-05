@@ -7,6 +7,7 @@
 #include "QMessageBox"
 #include "qcustomplot.h"
 #include <QtEndian>
+#include "ui_untitled.h"
 
 namespace Ui {
 class PIDCurve;
@@ -50,6 +51,7 @@ public:
     void flashChart(qint32 y1, qint32 y2, qint32 y3 );
     void initPlot();
 
+
 public slots:
     void slots_serialRxCallback();
 
@@ -78,6 +80,16 @@ private slots:
     void on_gpbGraph3_clicked(bool checked);
 
     void on_btnSaveCurve_clicked();
+
+    void on_btnCurve1PID_clicked();
+
+    void on_btnCurve2PID_clicked();
+
+    void on_btnCurve3PID_clicked();
+
+    void on_btnProtocol_clicked();
+
+    void on_btnCurveBG_clicked(bool checked);
 
 private:
     Ui::PIDCurve *ui;

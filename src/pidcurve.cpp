@@ -1,5 +1,4 @@
-#include "inc/pidcurve.h"
-
+#include "pidcurve.h"
 
 PIDCurve::PIDCurve(QWidget *parent) :
     QWidget(parent),
@@ -27,6 +26,18 @@ PIDCurve::PIDCurve(QWidget *parent) :
     if(graph3Enable){
         ui->gpbGraph3->setChecked(true);
     }
+
+    /* ui初始化 */
+    QApplication::setStyle(QStyleFactory::create("fusion"));// fusion 风格
+    QFile file(":/theme/blackOrange.css");              // QSS文件
+    if (!file.open(QFile::ReadOnly)){  // 打开文件
+        return;
+    }
+    QTextStream in(&file);
+    in.setCodec("UTF-8");
+    QString qss = in.readAll();        // 读取数据
+    qApp->setStyleSheet(qss);          // 应用
+    this->setWindowTitle("硬石电子-PID调试助手 v1.0");
 }
 
 PIDCurve::~PIDCurve()
@@ -34,14 +45,16 @@ PIDCurve::~PIDCurve()
     delete ui;
 }
 
-/* 初始化自定义绘图曲线 */
+/**
+ * @brief PIDCurve::initPlot 初始化曲线
+ */
 void PIDCurve::initPlot()
 {
     // set line style
     QPen pen;
     pen.setWidth(1);//线宽
     pen.setStyle(Qt::PenStyle::SolidLine);// a plain line
-    pen.setColor(Qt::blue);// blue
+    pen.setColor(Qt::cyan);// blue
 
     // add new graphs and set their look:
     ui->customPlot->addGraph();
@@ -59,7 +72,7 @@ void PIDCurve::initPlot()
     ui->customPlot->graph(2)->setName("曲线3");
 
     pen.setStyle(Qt::PenStyle::DashLine);// Dashs separated by a few pixels
-    pen.setColor(Qt::black);// black
+    pen.setColor(Qt::white);// white
 
     // 添加Graph，1条曲线使用一个Graph
     ui->customPlot->addGraph();
@@ -81,28 +94,47 @@ void PIDCurve::initPlot()
     ui->customPlot->legend->removeItem(4);
     ui->customPlot->legend->removeItem(3);
 
-//    ui->customPlot->setBackground(QBrush(Qt::black));
-//    ui->customPlot->setBackground(QBrush(QColor(46, 47, 48)));
+    // set some pens, brushes and backgrounds:
+    ui->customPlot->xAxis->setBasePen(QPen(Qt::white, 1));
+    ui->customPlot->yAxis->setBasePen(QPen(Qt::white, 1));
+    ui->customPlot->xAxis->setTickPen(QPen(Qt::white, 1));
+    ui->customPlot->yAxis->setTickPen(QPen(Qt::white, 1));
+    ui->customPlot->xAxis->setSubTickPen(QPen(Qt::white, 1));
+    ui->customPlot->yAxis->setSubTickPen(QPen(Qt::white, 1));
+    ui->customPlot->xAxis->setTickLabelColor(Qt::white);
+    ui->customPlot->yAxis->setTickLabelColor(Qt::white);
+    ui->customPlot->xAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+    ui->customPlot->yAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+    ui->customPlot->xAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+    ui->customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+    ui->customPlot->xAxis->grid()->setSubGridVisible(true);
+    ui->customPlot->yAxis->grid()->setSubGridVisible(true);
+    ui->customPlot->xAxis->grid()->setZeroLinePen(Qt::NoPen);
+    ui->customPlot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
+    ui->customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+    ui->customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+    QLinearGradient plotGradient;
+    plotGradient.setStart(0, 0);
+    plotGradient.setFinalStop(0, 350);
+    plotGradient.setColorAt(0, QColor(80, 80, 80));
+    plotGradient.setColorAt(1, QColor(50, 50, 50));
+    ui->customPlot->setBackground(plotGradient);
+    QLinearGradient axisRectGradient;
+    axisRectGradient.setStart(0, 0);
+    axisRectGradient.setFinalStop(0, 350);
+    axisRectGradient.setColorAt(0, QColor(80, 80, 80));
+    axisRectGradient.setColorAt(1, QColor(30, 30, 30));
+    ui->customPlot->axisRect()->setBackground(axisRectGradient);
 
-    // configure right and top axis to show ticks but no labels:
-    // (see QCPAxisRect::setupFullAxesBox for a quicker method to do this)
-    ui->customPlot->xAxis2->setVisible(true);
-//    ui->customPlot->xAxis2->setTickLabels(true);
-    ui->customPlot->yAxis2->setVisible(true);
-//    ui->customPlot->yAxis2->setTickLabels(true);
-
-    // make left and bottom axes always transfer their ranges to right and top axes:
-    connect(ui->customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->xAxis2, SLOT(setRange(QCPRange)));
-    connect(ui->customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->yAxis2, SLOT(setRange(QCPRange)));
-
-
-//    ui->customPlot->graph(2)->rescaleAxes(true);
+    //    ui->customPlot->graph(2)->rescaleAxes(true);
     // Note: we could have also just called ui->customPlot->rescaleAxes(); instead
     // Allow user to drag axis ranges with mouse, zoom with mouse wheel and select graphs by clicking:
     ui->customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
 }
 
-/*   初始化了串口设置当中的下拉列表(ComboBox) */
+/**
+ * @brief PIDCurve::initComboBox_Config 初始化串口设置当中的下拉列表
+ */
 void PIDCurve::initComboBox_Config()
 {
     /* 更新下拉列表 */
@@ -113,7 +145,9 @@ void PIDCurve::initComboBox_Config()
     BaseSerialComm::listPortNum ( ui -> cbbPortNum );
 }
 
-/* 刷新按钮点击 槽函数 */
+/**
+ * @brief PIDCurve::on_btnRefresh_clicked 刷新端口号
+ */
 void PIDCurve::on_btnRefresh_clicked()
 {
     if( !ui->btnOpenPort->isChecked()){  // 关闭串口才能刷新端口号
@@ -122,7 +156,10 @@ void PIDCurve::on_btnRefresh_clicked()
     }
 }
 
-/* 打开串口 槽函数*/
+/**
+ * @brief PIDCurve::on_btnOpenPort_clicked 打开端口
+ * @param checked
+ */
 void PIDCurve::on_btnOpenPort_clicked(bool checked)
 {
     QString tmp = ui->cbbPortNum->currentText();
@@ -131,11 +168,11 @@ void PIDCurve::on_btnOpenPort_clicked(bool checked)
         // 当前串口处于关闭状态
         currentPort->setPortName( tmp );              // 设置端口号
         if( currentPort->open(QIODevice::ReadWrite)){ // 打开串口
-            currentPort -> setDTRState(false);
-            currentPort -> setRTSState(false);
+            currentPort->setDataTerminalReady(false);
+            currentPort ->setRequestToSend(false);
             /* 配置端口的波特率等参数 */
-                this->configPort();
-                connect(currentPort ,SIGNAL(readyRead()),this,SLOT( slots_serialRxCallback()));// 有数据就直接接收显示
+            this->configPort();
+            connect(currentPort ,SIGNAL(readyRead()),this,SLOT( slots_serialRxCallback()));// 有数据就直接接收显示
             ui->btnOpenPort->setText(tr("关闭串口"));
         }else{
             ui->btnOpenPort->setChecked(false);
@@ -148,7 +185,9 @@ void PIDCurve::on_btnOpenPort_clicked(bool checked)
     }
 }
 
-/* 配置端口的波特率\数据位\奇偶校验\停止位 */
+/**
+ * @brief PIDCurve::configPort 配置端口的波特率等参数
+ */
 void PIDCurve::configPort()
 {
     QVariant tmpVariant;
@@ -173,7 +212,10 @@ void PIDCurve::configPort()
     }
 }
 
-/* 串口错误信息处理 */
+/**
+ * @brief PIDCurve::slots_errorHandler 串口错误信息提示
+ * @param error
+ */
 void PIDCurve::slots_errorHandler(QSerialPort::SerialPortError error)
 {
     switch(error){
@@ -187,6 +229,10 @@ void PIDCurve::slots_errorHandler(QSerialPort::SerialPortError error)
     }
 }
 
+/**
+ * @brief PIDCurve::on_gpbGraph1_clicked 选择要显示的曲线
+ * @param checked
+ */
 void PIDCurve::on_gpbGraph1_clicked(bool checked)
 {
     if(!checked){
@@ -202,7 +248,7 @@ void PIDCurve::on_gpbGraph2_clicked(bool checked)
     if(!checked){
         ui->customPlot->graph(1)->data().data()->clear();
         ui->customPlot->graph(4)->data().data()->clear();
-        graph1Enable = false;
+        graph2Enable = false;
     }else{
         graph2Enable = true;
     }
@@ -218,7 +264,9 @@ void PIDCurve::on_gpbGraph3_clicked(bool checked)
     }
 }
 
-/* 清除图像曲线 */
+/**
+ * @brief PIDCurve::on_btnClearChart_clicked 清除图像曲线
+ */
 void PIDCurve::on_btnClearChart_clicked()
 {
     ui->customPlot->graph(0)->data().data()->clear();
@@ -232,8 +280,9 @@ void PIDCurve::on_btnClearChart_clicked()
     ui->customPlot->yAxis->setRange(0, 250, Qt::AlignBottom);
 }
 
-
-/* 串口数据接收回调函数 */
+/**
+ * @brief PIDCurve::slots_serialRxCallback 接收并先更新曲线
+ */
 void PIDCurve::slots_serialRxCallback()
 {
     QByteArray rxbuf;
@@ -258,12 +307,18 @@ void PIDCurve::slots_serialRxCallback()
             tmp4 = rxbuf.at(13);
             qint32 y3 = (qint32)((tmp4<<24) | (tmp3<<16) | (tmp2<<8) |(tmp1<<0));
             this->flashChart(y1, y2, y3);
-        break;
+
+            break;
         }
     }
 }
 
-/* 更新图像 */
+/**
+ * @brief PIDCurve::flashChart 曲线填充数据
+ * @param y1  曲线1的数值
+ * @param y2
+ * @param y3
+ */
 void PIDCurve::flashChart(qint32 y1, qint32 y2, qint32 y3 )
 {
     ++posX;
@@ -289,109 +344,94 @@ void PIDCurve::flashChart(qint32 y1, qint32 y2, qint32 y3 )
     ui->customPlot->replot(QCustomPlot::rpQueuedReplot);
 }
 
-/* 判断是否有效,检查帧头,帧尾和校验码 */
+/**
+ * @brief PIDCurve::isDataEffective 检查校验码，验证数据是否有效
+ * @param rxbuf
+ * @return
+ */
 bool PIDCurve::isDataEffective(QByteArray &rxbuf)
 {
-    bool isEffentive = false;
     if(rxbuf.startsWith(0xAA) && rxbuf.endsWith('/')){
         if( 16 == rxbuf.size() ){
-            qint32 indexOfAA = rxbuf.indexOf(0xAA);
-            qint32 indexOf2F = rxbuf.indexOf('/');
-            qint32 indexOfCS = indexOf2F - 1 ;
-            quint8 cs = rxbuf.at( indexOfCS ); // 记录校验码
-            currentPort->insertVerify(rxbuf, indexOfAA+2, 2, BaseSerialComm::ADD8);// 计算校验码
-            quint8 csNew = (rxbuf.at( indexOfCS) );
-            if( csNew == cs){ // 校验码核对
-                rxbuf.remove(indexOfCS,1);
-                isEffentive = true;
+            QByteArray tmp = rxbuf.mid(1, 13);
+            quint8 cs = rxbuf.at( rxbuf.length() - 2 ); // 记录校验码
+            quint8 csVerify = currentPort->verifyADD8( tmp );
+            if( csVerify == cs){ // 校验码核对
+                return true;
             }
         }
     }
-    return isEffentive;
+    return false;
 }
 
-/* 短暂延时函数,不宜延时太长时间 */
+/**
+ * @brief PIDCurve::Delay_MSec 延时，不能延时太长时间
+ * @param msec
+ */
 void PIDCurve::Delay_MSec(quint32 msec)
 {
-    QTime _Timer = QTime::currentTime().addMSecs(msec);
+    QTime _Timer = QTime::currentTime().addMSecs( msec );
     while( QTime::currentTime() < _Timer )
         QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
 }
 
-/* 数据帧添加帧头帧尾 */
+/**
+ * @brief PIDCurve::addHeaderTrailer 发送数据帧添加帧头帧尾
+ * @param rxbuf
+ */
 void PIDCurve::addHeaderTrailer(QByteArray &rxbuf)
 {
-    rxbuf.append('/');
-    rxbuf.prepend(0xAA);
+    rxbuf.append( '/' );
+    rxbuf.prepend( 0xAA );
 }
 
-/* 设置曲线1的PID参数和目标值 */
+/**
+ * @brief PIDCurve::on_btnCurve1_clicked 发送曲线的目标值
+ */
 void PIDCurve::on_btnCurve1_clicked()
 {
-    typedef union {
-        float   floatNum;
-        quint32 intNum;
-    }floattoint_Typedef;
-    floattoint_Typedef ftiPID[3];
-    ftiPID[0].floatNum = ui->spbCurve1P->value();
-    ftiPID[1].floatNum = ui->spbCurve1I->value();
-    ftiPID[2].floatNum = ui->spbCurve1D->value();
-    sendFrame(SetPid1, ftiPID[0].intNum, ftiPID[1].intNum, ftiPID[2].intNum);
-    this->Delay_MSec(10);
     qint32 tmpParam = ui->txtCurve1Tartget->text().toInt(NULL,10);
     sendFrame(SetTarget1, tmpParam, 0, 0);
     target1 = tmpParam;
 }
 
-/* 设置曲线2的PID参数和目标值 */
 void PIDCurve::on_btnCurve2_clicked()
 {
-    typedef union {
-        float   floatNum;
-        quint32 intNum;
-    }floattoint_Typedef;
-    floattoint_Typedef ftiPID[3];
-    ftiPID[0].floatNum = ui->spbCurve2P->value();
-    ftiPID[1].floatNum = ui->spbCurve2I->value();
-    ftiPID[2].floatNum = ui->spbCurve2D->value();
-    sendFrame(SetPid2, ftiPID[0].intNum, ftiPID[1].intNum, ftiPID[2].intNum);
-    this->Delay_MSec(10);
     qint32 tmpParam = ui->txtCurve2Tartget->text().toInt(NULL,10);
     sendFrame(SetTarget2, tmpParam, 0, 0);
     target2 = tmpParam;
 }
 
-/* 设置曲线3的PID参数和目标值 */
 void PIDCurve::on_btnCurve3_clicked()
 {
-    typedef union {
-        float   floatNum;
-        quint32 intNum;
-    }floattoint_Typedef;
-    floattoint_Typedef ftiPID[3];
-    ftiPID[0].floatNum = ui->spbCurve3P->value();
-    ftiPID[1].floatNum = ui->spbCurve3I->value();
-    ftiPID[2].floatNum = ui->spbCurve3D->value();
-    sendFrame(SetPid3, ftiPID[0].intNum, ftiPID[1].intNum, ftiPID[2].intNum);
-    this->Delay_MSec(10);
     qint32 tmpParam = ui->txtCurve3Tartget->text().toInt(NULL,10);
     sendFrame(SetTarget3, tmpParam, 0, 0);
     target3 = tmpParam;
 }
 
-/* 启动电机 */
+/**
+ * @brief PIDCurve::on_btnStartMotor_clicked 启动电机
+ */
 void PIDCurve::on_btnStartMotor_clicked()
 {
     sendFrame(StartMotor, StartMotor, 0, 0);
 }
 
-/* 软件复位 */
+/**
+ * @brief PIDCurve::on_btnReset_clicked 软件复位
+ */
 void PIDCurve::on_btnReset_clicked()
 {
     sendFrame(Reset, Reset, 0, 0);
 }
 
-/* 发送数据帧 */
+/**
+ * @brief PIDCurve::sendFrame 发送数据帧
+ * @param cmd      指令
+ * @param param1   数据帧参数1
+ * @param param2   数据帧参数1
+ * @param param3   数据帧参数1
+ */
 void PIDCurve::sendFrame(CtrlCmd cmd, quint32 param1, quint32 param2, quint32 param3)
 {
     QByteArray txBuf(12,0x55);
@@ -400,55 +440,215 @@ void PIDCurve::sendFrame(CtrlCmd cmd, quint32 param1, quint32 param2, quint32 pa
     switch(cmd){
     case SetPid1:
     case SetPid2:
-    case SetPid3:
-        tmpParam = qToBigEndian(param1);// 传输数据是高位字节在前
+    case SetPid3:{
+        tmpParam = qToLittleEndian(param1);// 传输数据是高位字节在前
         txBuf.replace(1, 4, (const char*)&tmpParam, sizeof(tmpParam));     // 4个字节
-        tmpParam = qToBigEndian(param2);
+        tmpParam = qToLittleEndian(param2);
         txBuf.replace(5, 4, (const char*)&tmpParam, sizeof(tmpParam));     // 4个字节
-        tmpParam = qToBigEndian(param3);
+        tmpParam = qToLittleEndian(param3);
         txBuf.replace(9, 4, (const char*)&tmpParam, sizeof(tmpParam));     // 4个字节
-        currentPort->insertVerify(txBuf, 1, 0, BaseSerialComm::ADD8 ); // 从第一个字节开始,在尾部添加校验码
+        qint8 verify = currentPort->verifyADD8(txBuf);
+        txBuf.append(verify);
         this->addHeaderTrailer(txBuf);
         currentPort->write(txBuf);
-        break;
+    }break;
+
     case SetTarget1:
     case SetTarget2:
-    case SetTarget3:
+    case SetTarget3:{
         tmpParam = param1;
         txBuf.replace(1, 4, (const char*)&tmpParam, sizeof(tmpParam));     // 4个字节
-        currentPort->insertVerify(txBuf, 1, 0, BaseSerialComm::ADD8 ); //
+        qint8 verify = currentPort->verifyADD8(txBuf);
+        txBuf.append(verify);
         this->addHeaderTrailer(txBuf);
         currentPort->write(txBuf);
-        break;
+    }break;
+
     case Reset:
-    case StartMotor:
+    case StartMotor:{
         tmpParam = param1;
         txBuf[1] = (quint8)tmpParam;
-        currentPort->insertVerify(txBuf, 1, 0, BaseSerialComm::ADD8 ); //
+        qint8 verify = currentPort->verifyADD8(txBuf);
+        txBuf.append(verify);
         this->addHeaderTrailer(txBuf);
         currentPort->write(txBuf);
-        break;
+    }break;
+
     default:break;
     }
 }
 
-
+/**
+ * @brief PIDCurve::on_btnSaveCurve_clicked 保存图像
+ */
 void PIDCurve::on_btnSaveCurve_clicked()
 {
-  QString fileName = QFileDialog::getSaveFileName(this, "保存图像...",
-                                                  qApp->applicationDirPath(),
-                                                  "png(*.png);;jpg(*.jpg);;bmp(*.bmp);;pdf(*.pdf)");
+    QString fileName = QFileDialog::getSaveFileName(this, "保存图像...",
+                                                    qApp->applicationDirPath(),
+                                                    "png(*.png);;jpg(*.jpg);;bmp(*.bmp);;pdf(*.pdf)");
 
-  if (!fileName.isEmpty())
-  {
-      if(fileName.endsWith(".png")){
-          ui->customPlot->savePng(fileName);
-      }else if(fileName.endsWith(".jpg")){
-          ui->customPlot->saveJpg(fileName);
-      }else if(fileName.endsWith(".bmp")){
-          ui->customPlot->saveBmp(fileName);
-      }else if(fileName.endsWith(".pdf")){
-          ui->customPlot->savePdf(fileName,0,0,QCP::epAllowCosmetic,"ing10 PID","Curve");
-      }
-  }
+    if (!fileName.isEmpty()){
+        if(fileName.endsWith(".png")){
+            ui->customPlot->savePng(fileName);
+        }else if(fileName.endsWith(".jpg")){
+            ui->customPlot->saveJpg(fileName);
+        }else if(fileName.endsWith(".bmp")){
+            ui->customPlot->saveBmp(fileName);
+        }else if(fileName.endsWith(".pdf")){
+            ui->customPlot->savePdf(fileName,0,0,QCP::epAllowCosmetic,"ing10 PID","Curve");
+        }
+    }
+}
+
+/**
+ * @brief PIDCurve::on_btnCurve1PID_clicked 发送曲线1的PID参数
+ */
+void PIDCurve::on_btnCurve1PID_clicked()
+{
+    typedef union {
+        float   floatNum;
+        quint32 intNum;
+    }FloatToInt_Typedef;
+    FloatToInt_Typedef ftiPID[3];
+    ftiPID[0].floatNum = ui->spbCurve1P->value();
+    ftiPID[1].floatNum = ui->spbCurve1I->value();
+    ftiPID[2].floatNum = ui->spbCurve1D->value();
+    sendFrame(SetPid1, ftiPID[0].intNum, ftiPID[1].intNum, ftiPID[2].intNum);
+}
+
+void PIDCurve::on_btnCurve2PID_clicked()
+{
+    typedef union {
+        float   floatNum;
+        quint32 intNum;
+    }FloatToInt_Typedef;
+    FloatToInt_Typedef ftiPID[3];
+    ftiPID[0].floatNum = ui->spbCurve2P->value();
+    ftiPID[1].floatNum = ui->spbCurve2I->value();
+    ftiPID[2].floatNum = ui->spbCurve2D->value();
+    sendFrame(SetPid2, ftiPID[0].intNum, ftiPID[1].intNum, ftiPID[2].intNum);
+}
+
+void PIDCurve::on_btnCurve3PID_clicked()
+{
+    typedef union {
+        float   floatNum;
+        quint32 intNum;
+    }FloatToInt_Typedef;
+    FloatToInt_Typedef ftiPID[3];
+    ftiPID[0].floatNum = ui->spbCurve3P->value();
+    ftiPID[1].floatNum = ui->spbCurve3I->value();
+    ftiPID[2].floatNum = ui->spbCurve3D->value();
+    sendFrame(SetPid3, ftiPID[0].intNum, ftiPID[1].intNum, ftiPID[2].intNum);
+}
+
+/**
+ * @brief PIDCurve::on_btnProtocol_clicked 显示通信协议
+ */
+void PIDCurve::on_btnProtocol_clicked()
+{
+    QDialog *dialog = new QDialog();
+    Ui::Dialog ui;
+    ui.setupUi(dialog);
+
+    dialog->setAttribute(Qt::WA_DeleteOnClose); // 关闭的时候delete
+    dialog->setWindowTitle("通信协议");
+    ui.tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch );// 自适应列宽
+    ui.tableWidget->horizontalHeader()->setSectionResizeMode(2,QHeaderView::ResizeToContents );// 适应单元格内容
+    ui.tableWidget->horizontalHeader()->setSectionResizeMode(3,QHeaderView::ResizeToContents );// 适应单元格内容
+    ui.tableWidget->horizontalHeader()->setSectionResizeMode(4,QHeaderView::ResizeToContents );// 适应单元格内容
+    dialog->show();
+}
+
+void PIDCurve::on_btnCurveBG_clicked(bool checked)
+{
+    if( checked ){
+        // set some pens, brushes and backgrounds:
+        ui->customPlot->xAxis->setBasePen(QPen(Qt::black, 1));
+        ui->customPlot->yAxis->setBasePen(QPen(Qt::black, 1));
+        ui->customPlot->xAxis->setTickPen(QPen(Qt::black, 1));
+        ui->customPlot->yAxis->setTickPen(QPen(Qt::black, 1));
+        ui->customPlot->xAxis->setSubTickPen(QPen(Qt::black, 1));
+        ui->customPlot->yAxis->setSubTickPen(QPen(Qt::black, 1));
+        ui->customPlot->xAxis->setTickLabelColor(Qt::black);
+        ui->customPlot->yAxis->setTickLabelColor(Qt::black);
+        ui->customPlot->xAxis->grid()->setPen(QPen(QColor(115, 115, 115), 1, Qt::DotLine));
+        ui->customPlot->yAxis->grid()->setPen(QPen(QColor(115, 115, 115), 1, Qt::DotLine));
+        ui->customPlot->xAxis->grid()->setSubGridPen(QPen(QColor(175, 175, 175), 1, Qt::DotLine));
+        ui->customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(175, 175, 175), 1, Qt::DotLine));
+        ui->customPlot->xAxis->grid()->setSubGridVisible(true);
+        ui->customPlot->yAxis->grid()->setSubGridVisible(true);
+        ui->customPlot->xAxis->grid()->setZeroLinePen(Qt::NoPen);
+        ui->customPlot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
+        ui->customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+        ui->customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+        QLinearGradient plotGradient;
+        plotGradient.setStart(0, 0);
+        plotGradient.setFinalStop(0, 350);
+        plotGradient.setColorAt(0, QColor(255, 255, 255));
+        plotGradient.setColorAt(1, QColor(255, 255, 255));
+        ui->customPlot->setBackground(plotGradient);
+        QLinearGradient axisRectGradient;
+        axisRectGradient.setStart(0, 0);
+        axisRectGradient.setFinalStop(0, 350);
+        axisRectGradient.setColorAt(0, QColor(255, 255, 255));
+        axisRectGradient.setColorAt(1, QColor(255, 255, 255));
+        ui->customPlot->axisRect()->setBackground(axisRectGradient);
+
+        // set line style
+        QPen pen = ui->customPlot->graph(0)->pen();
+        pen.setColor(Qt::blue);// blue
+        ui->customPlot->graph(0)->setPen(pen);
+
+        pen.setStyle(Qt::PenStyle::DashLine);// Dashs separated by a few pixels
+        pen.setColor(Qt::black);// white
+        ui->customPlot->graph(3)->setPen(pen);
+        ui->customPlot->graph(4)->setPen(pen);
+        ui->customPlot->graph(5)->setPen(pen);
+
+    }else{
+        // set some pens, brushes and backgrounds:
+        ui->customPlot->xAxis->setBasePen(QPen(Qt::white, 1));
+        ui->customPlot->yAxis->setBasePen(QPen(Qt::white, 1));
+        ui->customPlot->xAxis->setTickPen(QPen(Qt::white, 1));
+        ui->customPlot->yAxis->setTickPen(QPen(Qt::white, 1));
+        ui->customPlot->xAxis->setSubTickPen(QPen(Qt::white, 1));
+        ui->customPlot->yAxis->setSubTickPen(QPen(Qt::white, 1));
+        ui->customPlot->xAxis->setTickLabelColor(Qt::white);
+        ui->customPlot->yAxis->setTickLabelColor(Qt::white);
+        ui->customPlot->xAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+        ui->customPlot->yAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+        ui->customPlot->xAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+        ui->customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+        ui->customPlot->xAxis->grid()->setSubGridVisible(true);
+        ui->customPlot->yAxis->grid()->setSubGridVisible(true);
+        ui->customPlot->xAxis->grid()->setZeroLinePen(Qt::NoPen);
+        ui->customPlot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
+        ui->customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+        ui->customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+        QLinearGradient plotGradient;
+        plotGradient.setStart(0, 0);
+        plotGradient.setFinalStop(0, 350);
+        plotGradient.setColorAt(0, QColor(80, 80, 80));
+        plotGradient.setColorAt(1, QColor(50, 50, 50));
+        ui->customPlot->setBackground(plotGradient);
+        QLinearGradient axisRectGradient;
+        axisRectGradient.setStart(0, 0);
+        axisRectGradient.setFinalStop(0, 350);
+        axisRectGradient.setColorAt(0, QColor(80, 80, 80));
+        axisRectGradient.setColorAt(1, QColor(30, 30, 30));
+        ui->customPlot->axisRect()->setBackground(axisRectGradient);
+
+        // set line style
+        QPen pen = ui->customPlot->graph(0)->pen();
+        pen.setColor(Qt::cyan);// cyan
+        ui->customPlot->graph(0)->setPen(pen);
+
+        pen.setStyle(Qt::PenStyle::DashLine);// Dashs separated by a few pixels
+        pen.setColor(Qt::white);// white
+        ui->customPlot->graph(3)->setPen(pen);
+        ui->customPlot->graph(4)->setPen(pen);
+        ui->customPlot->graph(5)->setPen(pen);
+    }
+    ui->customPlot->replot(QCustomPlot::rpQueuedReplot);
 }

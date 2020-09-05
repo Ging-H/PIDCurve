@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/action">
+        <file>action/refresh.png</file>
+    </qresource>
+    <qresource prefix="/general">
+        <file>general/ing10.ico</file>
+        <file>general/arrow_down_1.png</file>
+        <file>general/com_connect.png</file>
+        <file>general/com_disconnect.png</file>
+    </qresource>
+    <qresource prefix="/theme">
+        <file>blackOrange.css</file>
+    </qresource>
+</RCC>

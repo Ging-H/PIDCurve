@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>796</width>
+    <height>527</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <widget class="QTableWidget" name="tableWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>1</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>120</height>
+       </size>
+      </property>
+      <property name="showGrid">
+       <bool>true</bool>
+      </property>
+      <property name="gridStyle">
+       <enum>Qt::SolidLine</enum>
+      </property>
+      <property name="sortingEnabled">
+       <bool>false</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <property name="cornerButtonEnabled">
+       <bool>true</bool>
+      </property>
+      <attribute name="horizontalHeaderVisible">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>true</bool>
+      </attribute>
+      <row>
+       <property name="text">
+        <string>发送帧格式</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>接收帧格式</string>
+       </property>
+      </row>
+      <column>
+       <property name="text">
+        <string>帧头</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>指令码</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>参数1</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>参数2</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>参数3</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>校验码</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>结束符</string>
+       </property>
+      </column>
+      <item row="0" column="0">
+       <property name="text">
+        <string>0xAA</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="0" column="1">
+       <property name="text">
+        <string>0x07~0xA</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="0" column="2">
+       <property name="text">
+        <string>0x55 0x55 0x55 0x55</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="0" column="3">
+       <property name="text">
+        <string>0x55 0x55 0x55 0x55</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="0" column="4">
+       <property name="text">
+        <string>0x55 0x55 0x55 0x55</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="0" column="5">
+       <property name="text">
+        <string>CS</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="0" column="6">
+       <property name="text">
+        <string>0x2F</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="1" column="0">
+       <property name="text">
+        <string>0xAA</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="1" column="1">
+       <property name="text">
+        <string>0x88</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="1" column="2">
+       <property name="text">
+        <string>0x55 0x55 0x55 0x55</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="1" column="3">
+       <property name="text">
+        <string>0x55 0x55 0x55 0x55</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="1" column="4">
+       <property name="text">
+        <string>0x55 0x55 0x55 0x55</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="1" column="5">
+       <property name="text">
+        <string>CS</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+      <item row="1" column="6">
+       <property name="text">
+        <string>0x2F</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </item>
+     </widget>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>20</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1056</width>
+         <height>584</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;发送帧 ：从电脑发送数据帧到控制板。&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;接收帧 ：从控制板发送数据帧到电脑。&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;起始符 ： 数据帧的开头字符，固定是0xAA。&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;指令码 ： 动作指令 0x07:设置PID参数； 0x08:设置目标值；0x09:复位控制板；0x0A:启动；0x88:控制板反馈数据。&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;参数1  ： 第一个参数值，长度为4个字节的浮点型数据。如果数据帧不需要使用参数，则使用0x55填充。&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;参数2  ： 第二个参数值，长度为4个字节的浮点型数据。如果数据帧不需要使用参数，则使用0x55填充。&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;参数3  ： 第三个参数值，长度为4个字节的浮点型数据。如果数据帧不需要使用参数，则使用0x55填充。&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;校验码 ： 累加和校验，将指令码及3个参数共13个字节的数据进行累加，取低8位就是检验码。&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;结束符 ： 数据帧的结束字符，固定为0x2F。&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;参数1/2/3数据类型说明：浮点数存储使用IEEE754标准，具体的标准定义请自行搜索了解。使用C语言可以使用共用体类型来将浮点数转换成整型数据。&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; color:#d6bb9a;&quot;&gt;--------------------------------------&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#308c96;&quot;&gt;typedef&lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#308c96;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#308c96;&quot;&gt;union&lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#bec0c2;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#8c8e8f;&quot;&gt;{&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#d69aa7;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#a25151;&quot;&gt;float&lt;/span&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#bec0c2;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600;&quot;&gt;Float&lt;/span&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#d6bb9a;&quot;&gt;;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#bec0c2;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#a25151;&quot;&gt;uint32_t&lt;/span&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#bec0c2;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600;&quot;&gt;IntNum&lt;/span&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#d6bb9a;&quot;&gt;;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#8f7d67;&quot;&gt;}&lt;/span&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#a25151;&quot;&gt;FloatToInt_Typedef&lt;/span&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#d6bb9a;&quot;&gt;;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#a25151;&quot;&gt;FloatToInt_Typedef&lt;/span&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#bec0c2;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ftoi&lt;/span&gt;&lt;span style=&quot; font-family:'Courier New'; font-weight:600; color:#d6bb9a;&quot;&gt;;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ftoi.Float&lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#bec0c2;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#8c8e8f;&quot;&gt;=&lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#bec0c2;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#6a6b6c;&quot;&gt;1.5f&lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#95826b;&quot;&gt;;// 浮点型数据&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ftoi.Int&lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#d6bb9a;&quot;&gt;;         &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#95826b;&quot;&gt;// 整型数据，数值是 0x00000C3F&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; color:#d6bb9a;&quot;&gt;--------------------------------------&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;ftoi.Int就是占用4个字节的参数，在发送数据的时候注意低位字节在前，高位字节在后。&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;范例：&lt;/p&gt;
+&lt;p style=&quot; margin-top:3px; margin-bottom:3px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;接收帧&lt;/span&gt;： &lt;span style=&quot; font-weight:600; color:#000000;&quot;&gt;AA 88 58 07 00 00 00 00 00 00 00 00 00 00 E7 2F&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;解释： 58 07 00 00 是参数1，也是曲线1的数据，是整型数据，数值是1880。 参数2、参数3是曲线2、曲线3的数据。&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;发送帧1&lt;/span&gt;：&lt;span style=&quot; font-weight:600; color:#000000;&quot;&gt;AA 07 3F C0 00 00 40 13 33 33 00 00 00 00 BF 2F&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;解释： 07代表这帧数据是发送PID参数，参数1就是比例系数P,参数2就是积分系数I，参数3就是微分系数D,参数1数值是（3F C0 00 00)，是浮点型数据，数值是1.5f，BF就是前13个字符的累加和。&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;发送帧2&lt;/span&gt;：&lt;span style=&quot; font-weight:600; color:#000000;&quot;&gt;AA 08 E8 03 00 00 55 55 55 55 55 55 55 55 9B 2F&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;解释： 08代表这帧数据是发送目标值，参数1就是目标值，参数2、3没有意义，使用55填充。参数1数值是（E8 03 00 00 )，是整型数据，数值是1000，9B就是前13个字符的累加和。&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;发送帧3&lt;/span&gt;：&lt;span style=&quot; font-weight:600; color:#000000;&quot;&gt;AA 0A 0A 55 55 55 55 55 55 55 55 55 55 55 BB 2F&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;解释： 0A代表这帧数据是启动电机，参数1的0A就是动作值，其他参数没有意义，使用55填充。参数1数值是（0A 55 55 55 )，只有0A才有意义，BB就是前13个字符的累加和。&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;发送帧4&lt;/span&gt;：&lt;span style=&quot; font-weight:600; color:#000000;&quot;&gt;AA 09 09 55 55 55 55 55 55 55 55 55 55 55 B9 2F&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;解释： 09代表这帧数据是控制板复位，同发送帧3。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::RichText</enum>
+          </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>Dialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>227</x>
+     <y>489</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>295</x>
+     <y>489</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -37,13 +37,13 @@ HEADERS += \
     inc/pidcurve.h
 
 FORMS += \
-    ui/pidcurve.ui
+    ui/pidcurve.ui \
+    ui/untitled.ui
 
 # 资源文件
-RESOURCES += \
-        res/images.qrc
+RESOURCES += res/images.qrc
 
-RC_ICONS = /res/general/pid.ico
+RC_ICONS = res/general/pid.ico
 
 # 生成ui.h路径
 UI_DIR += ./ui
@@ -61,8 +61,8 @@ CONFIG(debug, debug|release){
 #DESTDIR = ../../release
 #LIBS  += -L ../../release -lSerialComm
 }
-CONFIG += precompile_header
-PRECOMPILED_HEADER +=
+#CONFIG += precompile_header
+#PRECOMPILED_HEADER +=
 
 
 
